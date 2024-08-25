@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{%load static%}
+{% block css %} {% static '/css/quizs.css' %} {% endblock css %}
+{% block body %}
+<div class = "container">
+    {%if quiz%}
+    {{quiz.id}}. {{quiz.question}}
+    <form method="POST" action="{% url 'submit_answer' %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" id="status" value="false">
+                <div class = "options">
+                    <input type="radio" id="option_1" name="option" value="{{ quiz.option_1 }}">
+                        <label for="option_1">{{ quiz.option_1 }}</label><br>
+
+                        <input type="radio" id="option_2" name="option" value="{{ quiz.option_2 }}">
+                        <label for="option_2">{{ quiz.option_2 }}</label><br>
+
+                        <input type="radio" id="option_3" name="option" value="{{ quiz.option_3 }}">
+                        <label for="option_3">{{ quiz.option_3 }}</label><br>
+
+                        <input type="radio" id="option_4" name="option" value="{{ quiz.option_4 }}">
+                        <label for="option_4">{{ quiz.option_4 }}</label><br>
+                </div>
+                <button type="submit" class="btn" onclick = "setStatusTrue()">Check Answer</button>
+            </form>
+        {%endif%}
+    </div>
+    
+    <script>
+        function setStatusTrue(){
+            document.getElementById('status').value = 'true';
+        }
+    </script>
+    {% endblock body%}    

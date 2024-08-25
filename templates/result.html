@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %} {% static '/css/quizs.css' %} {% endblock css %}
+
+{% block body %}
+<div class="container">
+    <h1>Quiz Result</h1>
+    {% if result_message %}
+    <p>{{ result_message }}</p>
+    <p>Question: {{ quiz.question }}</p>
+    <p>Selected Option: {{ selected_option }}</p>
+    <p>Correct Answer: {{ quiz.answer }}</p>
+    <p>Description: {{ quiz.desc }}</p>
+    {% else %}
+    <p>An error occurred. Please try again.</p>
+    {% endif %}
+    <a href="{% url 'home' %}" class="btn btn-primary">Try Another Question</a>
+    <a href = "{%url 'end' %}" class = "btn btn-primary">View Summary </a>
+</div>
+{% endblock body %}
