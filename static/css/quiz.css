@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+.desc {
+  display: none;
+}
+
+.container {
+  background-color: #1e90ff;
+  opacity: 80%;
+  border-radius: 30px;
+  padding: 50px;
+}
+
+.btn {
+  background-color: white;
+}
+body {
+  background-color: #1e1e1e;
+  color: white;
+  font-family: "Outfit", sans-serif;
+}
+
+.navbar {
+  padding: 30px 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+  padding-left: 70px;
+}
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+.logo img {
+  width: 50px;
+  height: 50px;
+}
+.brand-name {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding-left: 10px;
+}
+.nav-links {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  margin-right: 70px;
+}
+.nav-links li {
+  margin-left: 120px;
+}
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.container {
+  background-color: #1e90ff;
+  opacity: 80%;
+  border-radius: 30px;
+  padding: 20px;
+  width: 80%;
+  max-width: 1000px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: white;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.scales {
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 15px;
+}
+
+.question {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  max-width: 1000px;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.grid-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 50px;
+}
+
+.options input[type="radio"] {
+  display: none;
+}
+
+.options label {
+  background-color: white;
+  color: #7a6f6f;
+  border-radius: 40px;
+  padding: 20px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  text-align: center;
+  width: 400px;
+  height: auto;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.options [type="radio"]:checked + label {
+  background-color: #ffc107;
+  color: black;
+}
+
+.forbtn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding-right: 10px;
+}
+
+.submit {
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+}
