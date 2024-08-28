@@ -13,16 +13,19 @@
     {% if quizzes_with_options %}
     <h2>Quizzes Attempted</h2>
     <ul>
-        {% for item in quizzes_with_options %}
-        <li>
-            <strong>Question:</strong> {{ item.quiz.question }}<br>
-            <strong>Your Answer:</strong> {{ item.selected_option }}<br>
-            <strong>Correct Answer:</strong> {{ item.quiz.answer }}
-        </li>
-        {% empty %}
-        <p>No quizzes attempted.</p>
-        {% endfor %}
+        {% if quizzes_with_options %}
+            {% for item in quizzes_with_options %}
+                <li class="summary">
+                    <strong>Question:</strong> {{ item.quiz.question }}<br>
+                    <strong>Your Answer:</strong> {{ item.selected_option }}<br>
+                    <strong>Correct Answer:</strong> {{ item.quiz.answer }}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No quizzes attempted.</li>
+        {% endif %}
     </ul>
+    
     {% else %}
     <p>No quizzes attempted.</p>
     {% endif %}
