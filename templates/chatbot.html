@@ -1,46 +1,57 @@
-{% extends "base.html" %}
-{% block body %}
-<h1>Chatbot</h1>
-    <div id="chatbox">
-        <form id="chat-form" method="post">
-            {% csrf_token %}
-            <div id="messages"></div>
-            <input type="text" id="message" placeholder="Type your message here...">
-            <button type="button" onclick="sendMessage()" onkeydown="checkEnter(event)">Send</button>
-        </form>
+{% extends "base.html" %}{% block body %}
+<div class="chatbox">
+  <form id="chat-form" method="post">
+    {% csrf_token %}
+    <div id="messages"></div>
+    <div id="message" class="search-bar">
+      <input
+        type="text"
+        id="ai-input"
+        placeholder="Type your message here..."
+      />
+      <button
+        type="button"
+        class="ai-submit"
+        onclick="sendMessage()"
+        onkeydown="checkEnter(event)"
+      >
+        <img class="arrow" src="/static/images/arrow.png" />
+      </button>
     </div>
+  </form>
+</div>
 
-    <script>
-        function formatText(text) {
-            // Convert bold markers
-            let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); 
-            // Convert new lines to <br>
-            formattedText = formattedText.replace(/\n/g, '<br>');
-            return formattedText;
-        }
-        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+<script>
+  function formatText(text) {
+    // Convert bold markers
+    let formattedText = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    // Convert new lines to <br>
+    formattedText = formattedText.replace(/\n/g, "<br>");
+    return formattedText;
+  }
+  const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
 
-        async function sendMessage() {
-            const message = document.getElementById('message').value.trim();
-            if (message === '') return; // Prevent sending empty messages
-        
-            try {
-                const response = await fetch('', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRFToken': csrftoken
-                    },
-                    body: new URLSearchParams({ 'message': message })
-                });
-        
-                if (!response.ok) throw new Error('Network response was not ok');
-                
-                const data = await response.json();
-                const userMessage = formatText(message);
-                const botResponse = formatText(data.response);
-                
-                document.getElementById('messages').innerHTML += `
+  async function sendMessage() {
+    const message = document.getElementById("ai-input").value.trim();
+    if (message === "") return; // Prevent sending empty messages
+
+    try {
+      const response = await fetch("", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-CSRFToken": csrftoken,
+        },
+        body: new URLSearchParams({ message: message }),
+      });
+
+      if (!response.ok) throw new Error("Network response was not ok");
+
+      const data = await response.json();
+      const userMessage = formatText(message);
+      const botResponse = formatText(data.response);
+
+      document.getElementById("messages").innerHTML += `
                     <div class="message-container">
                         <div class="user-message">User: ${userMessage}</div>
                     </div>
@@ -48,19 +59,20 @@
                         <div class="bot-message">Bot: ${botResponse}</div>
                     </div>
                 `;
-                document.getElementById('message').value = '';
-                document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight; // Scroll to the bottom
-            } catch (error) {
-                console.error('There was a problem with the fetch operation:', error);
-            }
-        }
-        
-        function checkEnter(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // Prevent form submission
-                sendMessage();
-            }
-        }
-    </script>
+      document.getElementById("ai-input").value = "";
+      document.getElementById("messages").scrollTop =
+        document.getElementById("messages").scrollHeight; // Scroll to the bottom
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  }
 
-{% endblock body %}
+  function checkEnter(event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent form submission
+      sendMessage();
+    }
+  }
+</script>
+
+{% endblock %}

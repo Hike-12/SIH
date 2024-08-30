@@ -1,8 +1,5 @@
-{% extends "base.html" %}
-{% load static %}
-{% block css %} {% static '/css/quizs.css' %} {% endblock css %}
-
-{% block body %}
+{% extends "base.html" %} {% load static %} {% block css %} {% static
+'/css/quizs.css' %} {% endblock css %} {% block body %}
 <div class="container">
   {% if result_message %}
   <div class="white-box">
@@ -27,7 +24,7 @@
   </div>
   <div class="my-buttons">
     <a href="{% url 'home' %}"
-      ><img class="restart" src="/static/images/restart.png"
+      ><img class="restart" id="trans" src="/static/images/restart.png"
     /></a>
     <a href="{%url 'end' %}"
       ><img class="submit" src="/static/images/submit.png"
