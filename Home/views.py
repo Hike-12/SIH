@@ -20,7 +20,6 @@ def home(request):
         "quiz":quiz
     }
     
-    
     if 'attempted' not in request.session:
         request.session['attempted'] = 0
     if 'correct' not in request.session:
@@ -65,7 +64,7 @@ def submit_answer(request):
         selected_options[quiz_number] = selected_option
         request.session['selected_options'] = selected_options
         
-        result_message = f"Correct! The answer is : {quiz.answer}" if is_correct else f"Incorrect. The correct answer was: {quiz.answer}"
+        result_message = f"CORRECT" if is_correct else f"WRONG"
         
         context = {
             'result_message': result_message,

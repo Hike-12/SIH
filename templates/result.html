@@ -1,20 +1,37 @@
 {% extends "base.html" %}
 {% load static %}
-{% block css %} {% static '/css/quiz.css' %} {% endblock css %}
+{% block css %} {% static '/css/quizs.css' %} {% endblock css %}
 
 {% block body %}
 <div class="container">
-    <h1>Quiz Result</h1>
-    {% if result_message %}
-    <p>{{ result_message }}</p>
-    <p>Question: {{ quiz.question }}</p>
-    <p>Selected Option: {{ selected_option }}</p>
-    <p>Correct Answer: {{ quiz.answer }}</p>
-    <p>Description: {{ quiz.desc }}</p>
-    {% else %}
-    <p>An error occurred. Please try again.</p>
-    {% endif %}
-    <a href="{% url 'home' %}" class="btn btn-primary">Try Another Question</a>
-    <a href = "{%url 'end' %}" class = "btn btn-primary">View Summary </a>
+  {% if result_message %}
+  <div class="white-box">
+    <div class="result_message">
+      {% if result_message == 'CORRECT' %}
+      <h1 class="correct">{{ result_message }}</h1>
+      {% else %}
+      <h1 class="wrong">{{ result_message }}</h1>
+      {% endif %}
+    </div>
+    <div class="option-overview">
+      <span>Selected Option: {{ selected_option }}</span><br />
+      <span>Correct Answer: {{ quiz.answer }}</span>
+    </div>
+    <div class="des">
+      <span>Description:</span>
+      <p>{{ quiz.desc }}</p>
+      {% else %}
+      <p>An error occurred. Please try again.</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="my-buttons">
+    <a href="{% url 'home' %}"
+      ><img class="restart" src="/static/images/restart.png"
+    /></a>
+    <a href="{%url 'end' %}"
+      ><img class="submit" src="/static/images/submit.png"
+    /></a>
+  </div>
 </div>
 {% endblock body %}

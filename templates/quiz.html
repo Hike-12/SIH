@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 {%load static%}
-{% block css %} {% static '/css/quiz.css' %} {% endblock css %}
+{% block css %} {% static '/css/quizs.css' %} {% endblock css %}
 {% block body %}
 <div class = "container">
     {%if quiz%}
@@ -9,7 +9,7 @@
     <form method="POST" action="{% url 'submit_answer' %}">
                 {% csrf_token %}
                 <input type="hidden" name="status" id="status" value="false">
-                <div class = "options" >
+                <div class = "options">
                     <input type="radio" id="option_1" name="option" value="{{ quiz.option_1 }}">
                         <label for="option_1">{{ quiz.option_1 }}</label><br>
 

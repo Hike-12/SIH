@@ -1,31 +1,28 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css %}
-{% static 'css/quiz.css' %}
+{% static 'css/quizs.css' %}
 {% endblock css %}
 
 {% block body %}
 <div class="container">
-    <h1>Quiz Results</h1>
-    {% if attempted is not None and correct is not None %}
-    <p>Attempted: {{ attempted }}, Correct: {{ correct }}</p>
+  <h1>Quiz Results</h1>
+  {% if attempted is not None and correct is not None %}
+  <p>Attempted: {{ attempted }}, Correct: {{ correct }}</p>
 
     {% if quizzes_with_options %}
     <h2>Quizzes Attempted</h2>
     <ul>
-        {% if quizzes_with_options %}
-            {% for item in quizzes_with_options %}
-                <li class="summary">
-                    <strong>Question:</strong> {{ item.quiz.question }}<br>
-                    <strong>Your Answer:</strong> {{ item.selected_option }}<br>
-                    <strong>Correct Answer:</strong> {{ item.quiz.answer }}
-                </li>
-            {% endfor %}
-        {% else %}
-            <li>No quizzes attempted.</li>
-        {% endif %}
+        {% for item in quizzes_with_options %}
+        <li>
+            <strong>Question:</strong> {{ item.quiz.question }}<br>
+            <strong>Your Answer:</strong> {{ item.selected_option }}<br>
+            <strong>Correct Answer:</strong> {{ item.quiz.answer }}
+        </li>
+        {% empty %}
+        <p>No quizzes attempted.</p>
+        {% endfor %}
     </ul>
-    
     {% else %}
     <p>No quizzes attempted.</p>
     {% endif %}
@@ -37,5 +34,3 @@
     <a href="{% url 'home' %}" class="btn btn-primary">Continue</a>
 </div>
 {% endblock body %}
-
-
