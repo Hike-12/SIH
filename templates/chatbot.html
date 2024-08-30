@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Chatbot</h1>
+    <div id="chatbox">
+        <form id="chat-form" method="post">
+            {% csrf_token %}
+            <div id="messages"></div>
+            <input type="text" id="message" placeholder="Type your message here...">
+            <button type="button" onclick="sendMessage()">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            fetch('', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrftoken
+                },
+                body: new URLSearchParams({ 'message': message })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('messages').innerHTML += `
+                    <div class="message-container">
+                        <div class="user-message">User: ${message}</div>
+                    </div>
+                    <div class="message-container bot-message-container">
+                        <div class="bot-message">Bot: ${data.response}</div>
+                    </div>
+                `;
+                document.getElementById('message').value = '';
+                document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight; // Scroll to the bottom
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }
+    </script>
+
+{% endblock body %}

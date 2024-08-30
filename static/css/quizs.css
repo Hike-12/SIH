@@ -230,3 +230,10 @@ p {
   width: 44px;
   height: 44px;
 }
+
+#chatbox{
+  margin : 20px;
+}
+#messages{
+  margin : 20px;
+}

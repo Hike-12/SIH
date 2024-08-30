@@ -1,6 +1,13 @@
 from django.shortcuts import render,redirect,HttpResponse
 from Home.models import Quiz
 import random
+from django.shortcuts import render
+from django.http import JsonResponse
+import google.generativeai as genai
+import os
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def home(request):
@@ -116,3 +123,43 @@ def restart_quiz(request):
     request.session.pop('attempted_quizzes', None)
     request.session.pop('selected_options', None)
     return redirect('home')
+
+import requests
+
+
+
+@csrf_exempt  # If you need to exempt CSRF for testing, use this decorator
+def chatbot(request):
+    if request.method == 'POST':
+        user_message = request.POST.get('message')
+        if user_message:
+            response = get_bot_response(user_message)
+            return JsonResponse({'response': response})
+        else:
+            return JsonResponse({'error': 'No message provided'}, status=400)
+    return render(request, 'chatbot.html')
+
+def get_bot_response(user_message):
+    try:
+        # Configure the API key (ensure correct method based on the library)
+        api_key = os.getenv("GOOGLE_API_KEY")  # Use your actual environment variable name
+        genai.configure(api_key=api_key)
+        
+        # Initialize the model
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        
+        # Generate response
+        response = model.generate_content(user_message)
+        # Ensure response text is available
+        if hasattr(response, 'text'):
+            return response.text.strip()
+        else:
+            return 'Sorry, I didn’t understand that.'
+    except Exception as e:
+        print(f'Error: {e}')
+        return 'Sorry, there was an error processing your request.'
+
+
+
+
+    
