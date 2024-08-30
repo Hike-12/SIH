@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Quiz(models.Model):
     number = models.IntegerField(default=0)
-    question = models.CharField(max_length=100, default = "None")
+    question = models.CharField(max_length=200, default = "None")
     option_1 = models.CharField(max_length=50, default = "None")
     option_2 = models.CharField(max_length=50, default = "None")
     option_3 = models.CharField(max_length=50, default = "None")
