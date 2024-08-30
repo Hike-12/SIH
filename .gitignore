@@ -5,7 +5,6 @@
 __pycache__/
 
 # Ignore SQLite database file
-db.sqlite3
 
 # Ignore specific directories
 Home/__pycache__/
@@ -13,4 +12,4 @@ Home/migrations/__pycache__/
 Quiz/__pycache__/
 
 # Ignore macOS system files
-.DS_Store
+
