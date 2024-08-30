@@ -8,7 +8,7 @@ import os
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-
+from .news import News
 # Create your views here.
 def home(request):
     
@@ -158,8 +158,9 @@ def get_bot_response(user_message):
     except Exception as e:
         print(f'Error: {e}')
         return 'Sorry, there was an error processing your request.'
-
-
-
-
     
+def news_view(request):
+    topic = request.GET.get('topic', 'technology')  # Default to 'technology' if no topic is provided
+    news_instance = News(topic)
+    articles = news_instance.get_articles()
+    return render(request, 'news.html', {'articles': articles})

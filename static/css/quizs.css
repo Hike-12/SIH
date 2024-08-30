@@ -237,3 +237,7 @@ p {
 #messages{
   margin : 20px;
 }
+a {
+  color: #ffffff; /* Default link color */
+  text-decoration: none; /* Remove underline */
+}
