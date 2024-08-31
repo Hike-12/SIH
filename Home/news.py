@@ -12,12 +12,12 @@ class News:
     def fetch_news(self):
         try:
             self.response = requests.get(self.url)
-            self.response.raise_for_status()  # Raise HTTPError for bad responses
+            self.response.raise_for_status()  
             if self.response.status_code == 200:
                 self.articles = self.response.json().get('articles', [])
             else:
                 print(f"Error occurred: {self.response.status_code}")
-                print(self.response.json())  # Print detailed error response
+                print(self.response.json())  
         except requests.exceptions.HTTPError as err:
             print(f"HTTP error occurred: {err}")
         except requests.exceptions.RequestException as err:

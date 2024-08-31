@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .news import News
+import requests
 # Create your views here.
 def home(request):
     
@@ -91,13 +92,10 @@ def end(request):
     attempted_quizzes = request.session.get('attempted_quizzes', [])
     selected_options = request.session.get('selected_options', {})
     
-    print("Selected Options in Session:", selected_options)  # Print or log to check contents
-
-
-    # Fetch all attempted quizzes from the database
+    print("Selected Options in Session:", selected_options)
     quizzes = Quiz.objects.filter(number__in=attempted_quizzes)
 
-    # Prepare a list to hold quiz and selected option pairs
+    
     quizzes_with_options = []
     for quiz in quizzes:
         option = selected_options.get(str(quiz.number), "Not attempted")
@@ -124,11 +122,7 @@ def restart_quiz(request):
     request.session.pop('selected_options', None)
     return redirect('home')
 
-import requests
-
-
-
-@csrf_exempt  # If you need to exempt CSRF for testing, use this decorator
+@csrf_exempt  
 def chatbot(request):
     if request.method == 'POST':
         user_message = request.POST.get('message')
@@ -141,16 +135,10 @@ def chatbot(request):
 
 def get_bot_response(user_message):
     try:
-        # Configure the API key (ensure correct method based on the library)
-        api_key = os.getenv("GOOGLE_API_KEY")  # Use your actual environment variable name
+        api_key = os.getenv("GOOGLE_API_KEY")  
         genai.configure(api_key=api_key)
-        
-        # Initialize the model
         model = genai.GenerativeModel("gemini-1.5-flash")
-        
-        # Generate response
         response = model.generate_content(user_message)
-        # Ensure response text is available
         if hasattr(response, 'text'):
             return response.text.strip()
         else:
@@ -160,7 +148,7 @@ def get_bot_response(user_message):
         return 'Sorry, there was an error processing your request.'
     
 def news_view(request):
-    topic = request.GET.get('topic', 'technology')  # Default to 'technology' if no topic is provided
+    topic = request.GET.get('topic', 'technology') 
     news_instance = News(topic)
     articles = news_instance.get_articles()
     return render(request, 'news.html', {'articles': articles})

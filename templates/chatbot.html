@@ -23,9 +23,7 @@
 
 <script>
   function formatText(text) {
-    // Convert bold markers
     let formattedText = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-    // Convert new lines to <br>
     formattedText = formattedText.replace(/\n/g, "<br>");
     return formattedText;
   }
@@ -33,7 +31,7 @@
 
   async function sendMessage() {
     const message = document.getElementById("ai-input").value.trim();
-    if (message === "") return; // Prevent sending empty messages
+    if (message === "") return;
 
     try {
       const response = await fetch("", {
@@ -61,7 +59,7 @@
                 `;
       document.getElementById("ai-input").value = "";
       document.getElementById("messages").scrollTop =
-        document.getElementById("messages").scrollHeight; // Scroll to the bottom
+      document.getElementById("messages").scrollHeight; 
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
     }
@@ -69,7 +67,7 @@
 
   function checkEnter(event) {
     if (event.key === "Enter") {
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault(); 
       sendMessage();
     }
   }
