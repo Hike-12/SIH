@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block body %}
 <div class="container">
-    <h1>News Articles</h1>
+    <div class="heading">    <h1>News Articles</h1></div>
     {% if articles %}
     {% for article in articles %}
-    <div class="article">
-        <div class="title">{{ article.title }}</div>
+    <div class="article" id="articl">
+        <div class="title" >{{ article.title }}</div>
         <div class="source">Source: {{ article.source }}</div>
         <div class="author">Author: {{ article.author }}</div>
-        <div class="description">{{ article.description }}</div>
+        <div class="description">{{ article.description }}</div><br/>
         <a href="{{ article.url }}" class="url" target="_blank">Read more</a>
         <br>
         <br>
