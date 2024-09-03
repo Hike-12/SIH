@@ -10,7 +10,9 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .news import News
 import requests
-# Create your views here.
+import pyttsx3
+
+
 def home(request):
     
     quizs = Quiz.objects.filter(status = False)
