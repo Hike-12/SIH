@@ -34,3 +34,12 @@ class Short(models.Model):
     def __str__(self):
         return self.section
     
+class Choice(models.Model):
+    title = models.CharField(max_length=50, default="None")
+    case_study = models.TextField(default="None")
+    status = models.BooleanField(default=False)
+    solution = models.TextField(default="None")
+    
+    def __str__(self):
+        return self.title
+    

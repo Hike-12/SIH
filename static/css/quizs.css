@@ -343,3 +343,10 @@ p {
   justify-content: center;
   padding-top: 20px;
 }
+
+.short{
+  display: flex;
+}
+.solution{
+  display : none;
+}

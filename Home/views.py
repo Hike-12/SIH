@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,HttpResponse
 from Home.models import Quiz
 from Home.models import Hero_Day
 from Home.models import Short
+from Home.models import Choice
 import random
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -171,5 +172,14 @@ def hero(request):
 
 
 def short(request):
-    context = Short.objects.get(all)
-    return render(request, 'short.html',{'context':context})
+    context = Short.objects.all()
+    return render(request, 'short.html',{'shorts':context})
+
+def choice(request):
+    cases = Choice.objects.filter(status = False)
+    case_list = list(cases)
+    case = random.choice(case_list)
+    if request.method == "POST":
+        case.status = True
+        case.save()
+    return render(request, 'choice.html' , {'case':case})

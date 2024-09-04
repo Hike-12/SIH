@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+    <h1>{{ case.title }}</h1>
+    <p>{{ case.case_study }}</p>
+    <form>
+        {% csrf_token %}
+        <input type="text" name="solution" placeholder="Enter your solution here">
+        <button type="button" onclick="toggle_answer()">Click to Submit</button>
+        <p id="solution" class="solution">{{ case.solution }}</p>
+    </form>
+    <form method = "POST" url = 'choice'>
+        {% csrf_token %}
+        <button type = "submit">Next Case</button>
+    </form>
+    <script>
+        function toggle_answer() {
+            let answer = document.getElementById("solution");
+            if (answer.style.display === "none" || answer.style.display === "") {
+                answer.style.display = "block";
+            } else {
+                answer.style.display = "none";
+            }
+        }
+    </script>
+{% endblock %}

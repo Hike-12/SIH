@@ -1,3 +1,35 @@
-{% extends "base.html" %}{% block body %}
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<h3>Fundamental Rights</h3>
+<div class="short">
+    {% for short in shorts %}
+        {% if short.tag == "Rights" %}
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{% static 'path/to/image.jpg' %}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ short.section }}</h5>
+              <p class="card-text">{{ short.description }}</p>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
 
+<h3>Fundamental Duties</h3>
+<div class="short">
+    {% for short in shorts %}
+        {% if short.tag == "Duties" %}
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{% static 'path/to/image.jpg' %}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ short.section }}</h5>
+              <p class="card-text">{{ short.description }}</p>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
 {% endblock %}
+
+
