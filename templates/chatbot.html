@@ -1,4 +1,6 @@
-{% extends "base.html" %}{% block body %}
+{% extends "base.html" %}
+
+{% block body %}
 <div class="chatbox">
   <form id="chat-form" method="post">
     {% csrf_token %}
@@ -8,15 +10,18 @@
         type="text"
         id="ai-input"
         placeholder="Type your message here..."
+        onkeydown="checkEnter(event)"
       />
       <button
         type="button"
         class="ai-submit"
         onclick="sendMessage()"
-        onkeydown="checkEnter(event)"
       >
         <img class="arrow" src="/static/images/arrow.png" />
       </button>
+    </div>
+    <div class="TextToSpeech" id="TTS">
+      <button type="button" onclick="TextToSpeech()">Text to Speech</button>
     </div>
   </form>
 </div>
@@ -27,7 +32,11 @@
     formattedText = formattedText.replace(/\n/g, "<br>");
     return formattedText;
   }
+  
   const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  let lastBotResponse = "";  
+  let speechSynthesisActive = false; 
+  let currentSpeech; 
 
   async function sendMessage() {
     const message = document.getElementById("ai-input").value.trim();
@@ -50,16 +59,19 @@
       const botResponse = formatText(data.response);
 
       document.getElementById("messages").innerHTML += `
-                    <div class="message-container">
-                        <div class="user-message">User: ${userMessage}</div>
-                    </div>
-                    <div class="message-container bot-message-container">
-                        <div class="bot-message">Bot: ${botResponse}</div>
-                    </div>
-                `;
+        <div class="message-container">
+            <div class="user-message">User: ${userMessage}</div>
+        </div>
+        <div class="message-container bot-message-container">
+            <div class="bot-message">Bot: ${botResponse}</div>
+        </div>
+      `;
+
+      lastBotResponse = data.response;
+
       document.getElementById("ai-input").value = "";
       document.getElementById("messages").scrollTop =
-      document.getElementById("messages").scrollHeight; 
+        document.getElementById("messages").scrollHeight;
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
     }
@@ -67,8 +79,27 @@
 
   function checkEnter(event) {
     if (event.key === "Enter") {
-      event.preventDefault(); 
+      event.preventDefault();
       sendMessage();
+    }
+  }
+
+  function speakText(text) {
+    var speech = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(speech);
+    return speech;
+  }
+
+  function TextToSpeech() {
+    if (speechSynthesisActive) {
+      window.speechSynthesis.cancel();
+      speechSynthesisActive = false;
+    } else {
+      currentSpeech = speakText(lastBotResponse);
+      speechSynthesisActive = true;
+      currentSpeech.onend = function() {
+        speechSynthesisActive = false;
+      };
     }
   }
 </script>
