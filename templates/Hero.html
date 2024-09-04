@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div>
+        <form method = "POST">
+            {% csrf_token %}
+            <input type = "date" name = "date_want"></input>
+            <button type = "submit">Set Date</button>
+        </form>
+        {% if heroes %}
+            <h2>Heroes on {{ heroes.first.date|date:"F j, Y" }}</h2>
+            <ul>
+                {% for hero in heroes %}
+                    <li>
+                        <h3>{{ hero.person }}</h3>
+                        <p><strong>Event:</strong> {{ hero.event }}</p>
+                        <p><strong>Event Description:</strong> {{ hero.event_desc }}</p>
+                        <p><strong>Person Description:</strong> {{ hero.person_desc }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No heroes found for the selected date.</p>
+        {% endif %}
+    </div>
+{% endblock %}

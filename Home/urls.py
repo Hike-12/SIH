@@ -24,5 +24,7 @@ urlpatterns = [
    path('submit_answer/', views.submit_answer, name='submit_answer'),
    path('end/', views.end, name='end'),
    path('restart/', views.restart_quiz, name='restart_quiz'),
-   path('news/',views.news_view, name = "news_views")
+   path('news/',views.news_view, name = "news_views"),
+   path('hero/',views.hero, name = "hero"),
+   path('short/',views.short, name = "short"),
 ]

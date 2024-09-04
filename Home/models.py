@@ -14,3 +14,23 @@ class Quiz(models.Model):
     
     def __str__(self):
         return self.question
+    
+class Hero_Day(models.Model):
+    date = models.DateField()
+    event = models.CharField(max_length=200, default = "None")
+    person = models.CharField(max_length=200, default = "None")
+    event_desc = models.TextField(default="None")
+    person_desc = models.TextField(default="None")
+    
+    def __str__(self):
+        return self.event
+    
+    
+class Short(models.Model):
+    tag = models.CharField(max_length=200, default = "None")
+    section = models.TextField(default="None")
+    description = models.TextField(default="None")
+    
+    def __str__(self):
+        return self.section
+    

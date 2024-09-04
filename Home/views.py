@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from Home.models import Quiz
+from Home.models import Hero_Day
+from Home.models import Short
 import random
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -10,6 +12,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .news import News
 import requests
+from django.utils.timezone import localdate
 # Create your views here.
 def home(request):
     
@@ -152,3 +155,21 @@ def news_view(request):
     news_instance = News(topic)
     articles = news_instance.get_articles()
     return render(request, 'news.html', {'articles': articles})
+
+def hero(request):
+    date_want = request.POST.get('date_want')
+    
+    if date_want:
+        try:
+            context = Hero_Day.objects.filter(date=date_want)
+        except Hero_Day.DoesNotExist:
+            context = Hero_Day.objects.filter(date=localdate())
+    else:
+        context = Hero_Day.objects.filter(date=localdate())
+
+    return render(request, 'hero.html', {'heroes': context})
+
+
+def short(request):
+    context = Short.objects.get(all)
+    return render(request, 'short.html',{'context':context})
