@@ -16,6 +16,8 @@ import requests
 from django.utils.timezone import localdate
 # Create your views here.
 def home(request):
+    return render(request, 'home.html')
+def quiz(request):
     
     quizs = Quiz.objects.filter(status = False)
     quiz_list = list(quizs)
@@ -88,7 +90,7 @@ def submit_answer(request):
         }
          
         return render (request, 'result.html', context)
-    return redirect('home')
+    return redirect('quiz')
 
 def end(request):
     attempted = request.session.get('attempted', 0)
@@ -124,7 +126,7 @@ def restart_quiz(request):
     request.session.pop('quiz_number', None)
     request.session.pop('attempted_quizzes', None)
     request.session.pop('selected_options', None)
-    return redirect('home')
+    return redirect('quiz')
 
 @csrf_exempt  
 def chatbot(request):

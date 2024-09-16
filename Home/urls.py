@@ -20,6 +20,7 @@ from Home  import views
 
 urlpatterns = [
    path('', views.home, name = 'home'),
+   path('quiz/', views.quiz, name = 'quiz'),
    path('chatbot/',views.chatbot, name = "chatbot"),
    path('submit_answer/', views.submit_answer, name='submit_answer'),
    path('end/', views.end, name='end'),

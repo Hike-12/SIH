@@ -1,34 +1,56 @@
-{% extends "base.html" %} {% load static %} {% block css %} {% static
-'/css/quiz.css' %} {% endblock css %} {% block body %}
-<div class="container">
-  {% if result_message %}
-  <div class="white-box">
-    <div class="result_message">
-      {% if result_message == 'CORRECT' %}
-      <h1 class="correct">{{ result_message }}</h1>
-      {% else %}
-      <h1 class="wrong">{{ result_message }}</h1>
-      {% endif %}
+{% load static %}
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% block css %}{% endblock css %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/quizs.css' %}"
+    />
+    <title>Quiz</title>
+  </head>
+  <body>
+    <div class="container">
+      {% if result_message %}
+      <div class="inner-container">
+        <div class="result_message">
+          <span class="highlight">{{ result_message }}</span>
+        </div>
+        <div class="option-overview">
+          <span>Selected Option: {{ selected_option }}</span><br /><br />
+          <span>Correct Answer: {{ quiz.answer }}</span>
+        </div>
+        <div class="des">
+          <span>Description:</span>
+          <p class="mr-des">{{ quiz.desc }}</p>
+          {% else %}
+          <p class="mr-des">An error occurred. Please try again.</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="my-buttons">
+        <a href="{% url 'quiz' %}"
+          ><img
+            class="restart"
+            id="trans"
+            src="/static/images/restart-frame.svg"
+        /></a>
+        <a href="{%url 'end' %}"
+          ><img class="submit" src="/static/images/arrow-frame.svg"
+        /></a>
+      </div>
     </div>
-    <div class="option-overview">
-      <span>Selected Option: {{ selected_option }}</span><br />
-      <span>Correct Answer: {{ quiz.answer }}</span>
-    </div>
-    <div class="des">
-      <span>Description:</span>
-      <p>{{ quiz.desc }}</p>
-      {% else %}
-      <p>An error occurred. Please try again.</p>
-      {% endif %}
-    </div>
-  </div>
-  <div class="my-buttons">
-    <a href="{% url 'home' %}"
-      ><img class="restart" id="trans" src="/static/images/restart.png"
-    /></a>
-    <a href="{%url 'end' %}"
-      ><img class="submit" src="/static/images/submit.png"
-    /></a>
-  </div>
-</div>
-{% endblock body %}
+  </body>
+</html>

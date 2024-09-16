@@ -21,6 +21,7 @@ class Hero_Day(models.Model):
     person = models.CharField(max_length=200, default = "None")
     event_desc = models.TextField(default="None")
     person_desc = models.TextField(default="None")
+    img = models.ImageField(default="None")
     
     def __str__(self):
         return self.event
