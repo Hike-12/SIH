@@ -149,24 +149,5 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script>
-    const popup = document.getElementById("popup");
-const popupBtn = document.getElementById("popupBtn");
-const closeBtn = document.querySelector(".close-btn");
-
-popupBtn.onclick = function() {
-  popup.style.display = "flex";
-};
-
-closeBtn.onclick = function() {
-  popup.style.display = "none";
-};
-
-window.onclick = function(event) {
-  if (event.target == popup) {
-    popup.style.display = "none";
-  }
-};
-</script>
   </body>
 </html>
