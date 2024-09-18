@@ -14,34 +14,32 @@
       type="text/css"
       href="{% block css %}{% endblock css %}"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static 'css/quizs.css' %}"
-    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/quiz.css' %}" />
     <title>Quiz</title>
   </head>
   <body>
-    <div class="container">
-      <div class="white-box">
+    <div class="container" id="mr-outer-summary">
+      <div class="inner-container">
         <div class="quiz-results">
-          <h1>Quiz Result</h1>
+          <span id="mr-overview">Overview</span>
         </div>
 
         <div class="score">
           {% if attempted is not None and correct is not None %}
-          <p class="score-text">Score: {{ correct }}/{{ attempted }}</p>
+          <p class="highlight" id="score-text">
+            Score: {{ correct }}/{{ attempted }}
+          </p>
         </div>
 
         {% if quizzes_with_options %}
-        <h3 class="score-text">Questions:</h3>
         <ul>
           {% for item in quizzes_with_options %}
           <div class="que-sel-cor">
-            <li>
-              {{ item.quiz.question }}<br />
-              <strong>Selected Option: </strong> {{ item.selected_option }}<br />
-              <strong>Correct Option: </strong> {{ item.quiz.answer }}
+            <li class="special-list">
+              {{ item.quiz.question }}<br /><br />
+              <span>Selected Option:&nbsp;</span> {{ item.selected_option }}<br />
+              <span>Correct Option:&nbsp;&nbsp;&nbsp;</span>
+              {{item.quiz.answer}}
             </li>
             {% empty %}
             <p>No quizzes attempted.</p>

@@ -1,4 +1,4 @@
-{% extends "home.html" %}
+{% load static %}
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -14,38 +14,52 @@
       type="text/css"
       href="{% block css %}{% endblock css %}"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static 'css/quizs.css' %}"
-    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/quiz.css' %}" />
     <title>Quiz</title>
   </head>
   <body>
-    <div>
-      <form class="date-text" method="POST">
-        {% csrf_token %}
-        <input type="date" name="date_want" />
-        <button type="submit">Set Date</button>
-      </form>
-      {% if heroes %}
-      <h2 class="date-text">Heroes on {{ heroes.first.date|date:"F j, Y" }}</h2>
-      <div class="hero-content">
-        <ul class="hero-title">
-          {% for hero in heroes %}
-          <li>
-            <h3>{{ hero.person }}</h3>
-            <div class="event-text">
-              <p>Event: {{ hero.event }}</p>
-              <p>Event Description: {{ hero.event_desc }}</p>
-              <p>Person Description: {{ hero.person_desc }}</p>
-            </div>
-          </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p>No heroes found for the selected date.</p>
-        {% endif %}
+    <div class="container">
+      <div class="inner-container">
+        <form class="date-text" method="POST">
+          {% csrf_token %}
+          <input class="hero-input" type="date" name="date_want" />
+          <button class="hero-submit" type="submit">Set Date</button>
+        </form>
+        {% if heroes %}
+        <div class="hero-content">
+          <ul class="hero-title">
+            {% for hero in heroes %}
+            <li class="super-special-list">
+              <div class="bold_60" id="hero-name">
+                <span>{{ hero.person }}</span>
+              </div>
+              <div class="event-text">
+                <div class="event-nam">
+                  <span class="mr-span">Event: </span>
+                  <div class="para1"><p>{{ hero.event }}</p></div>
+                </div>
+
+                <div class="event-desc">
+                  <span class="mr-span">Event Description: </span><br />
+                  <div class="para1">
+                    <p>{{hero.event_desc }}</p>
+                  </div>
+                </div>
+
+                <div class="person-desc">
+                  <span class="mr-span">Person Description:</span><br />
+                  <div class="para1">
+                    <p>{{hero.person_desc }}</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>No heroes found for the selected date.</p>
+          {% endif %}
+        </div>
       </div>
     </div>
   </body>

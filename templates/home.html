@@ -14,11 +14,7 @@
       type="text/css"
       href="{% block css %}{% endblock css %}"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static 'css/quizs.css' %}"
-    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/quiz.css' %}" />
     <title>Quiz</title>
   </head>
   <body>
@@ -65,6 +61,15 @@
             </li>
 
             <li>
+              <a href="/chatbot"
+                ><span class="highlight" id="t-links">Resolve</span><br />
+                <p class="sub-text">
+                  Resolve any doubts or queries with our AI Assistant.
+                </p></a
+              >
+            </li>
+
+            <li>
               <a href="/choice"
                 ><span class="highlight" id="t-links">Apply</span><br />
                 <p class="sub-text">
@@ -75,14 +80,93 @@
             </li>
           </ul>
         </div>
+        <div class="steps">
+          <span class="bold">News</span>
+          <ul>
+            <li>
+              <a href="/news">
+                <span class="highlight" id="t-links">News</span><br />
+                <p class="sub-text">Discover the latest updates in law!</p>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
+    <div id="popup" class="popup-container">
+      <div class="popup-content">
+        <span class="close-btn">&times;</span>
+        <div class="container">
+          <div class="inner-container">
+            <form class="date-text" method="POST">
+              {% csrf_token %}
+              <input class="hero-input" type="date" name="date_want" />
+              <button class="hero-submit" type="submit">Set Date</button>
+            </form>
+            {% if heroes %}
+            <div class="hero-content">
+              <ul class="hero-title">
+                {% for hero in heroes %}
+                <li class="super-special-list">
+                  <div class="bold_60" id="hero-name">
+                    <span>{{ hero.person }}</span>
+                  </div>
+                  <div class="event-text">
+                    <div class="event-nam">
+                      <span class="mr-span">Event: </span>
+                      <div class="para1"><p>{{ hero.event }}</p></div>
+                    </div>
+                    <div class="event-desc">
+                      <span class="mr-span">Event Description: </span><br />
+                      <div class="para1">
+                        <p>{{hero.event_desc }}</p>
+                      </div>
+                    </div>
+                    <div class="person-desc">
+                      <span class="mr-span">Person Description:</span><br />
+                      <div class="para1">
+                        <p>{{hero.person_desc }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p style="text-align: center">No heroes found for the selected date.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <button id="popupBtn">Open Popup</button>
+    
     {% block body %}{% endblock body%}
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script>
+    const popup = document.getElementById("popup");
+const popupBtn = document.getElementById("popupBtn");
+const closeBtn = document.querySelector(".close-btn");
+
+popupBtn.onclick = function() {
+  popup.style.display = "flex";
+};
+
+closeBtn.onclick = function() {
+  popup.style.display = "none";
+};
+
+window.onclick = function(event) {
+  if (event.target == popup) {
+    popup.style.display = "none";
+  }
+};
+</script>
   </body>
 </html>

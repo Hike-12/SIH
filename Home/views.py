@@ -16,7 +16,19 @@ import requests
 from django.utils.timezone import localdate
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    date_want = request.POST.get('date_want')
+    
+    if date_want:
+        try:
+            context = Hero_Day.objects.filter(date=date_want)
+        except Hero_Day.DoesNotExist:
+            context = Hero_Day.objects.filter(date=localdate())
+    else:
+        context = Hero_Day.objects.filter(date=localdate())
+
+    return render(request, 'home.html', {'heroes': context})
+    # return render(request, 'home.html')
+
 def quiz(request):
     
     quizs = Quiz.objects.filter(status = False)
@@ -159,20 +171,8 @@ def news_view(request):
     articles = news_instance.get_articles()
     return render(request, 'news.html', {'articles': articles})
 
-def hero(request):
-    date_want = request.POST.get('date_want')
-    
-    if date_want:
-        try:
-            context = Hero_Day.objects.filter(date=date_want)
-        except Hero_Day.DoesNotExist:
-            context = Hero_Day.objects.filter(date=localdate())
-    else:
-        context = Hero_Day.objects.filter(date=localdate())
-
-    return render(request, 'hero.html', {'heroes': context})
-
-
+def hero(request): 
+    pass
 def short(request):
     context = Short.objects.all()
     return render(request, 'short.html',{'shorts':context})
